@@ -11,35 +11,28 @@ use com\yurisi\TreeCutter\Event\EventListener;
 
 class main extends PluginBase implements Listener{
 
-    /**
-     * @var string
-     */
-    public $plugin="TreeCutter";
+    const PLUGIN_NAME="TreeCutter";
 
     public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(),$this);
         $this->getServer()->getCommandMap()->register("tc", new tcCommand());
-        $this->getLogger()->info("§bTreeCutterを開きました");
+        $this->getLogger()->info("§b".self::PLUGIN_NAME."を開きました");
     }
 
     /**
      * @param Player $player
      * @return bool
      */
-    public static function isOn(Player $player){
-        $tag = $player->namedtag;
-        if (!$tag->offsetExists("TreeCutter")) {
-            return false;
-        }
-        if ($tag->getInt("TreeCutter") == 0) {
-            return false;
-        } else {
-            return true;
-        }
+    public static function isOn(Player $player):bool{
+        $tag=$player->namedtag;
+		if (!$tag->offsetExists("TreeCutter")) {
+			return false;
+		}
+        return ($tag->getInt(self::PLUGIN_NAME) === 1);
     }
 
     public function onDisable() {
-        $this->getLogger()->info("§aTreeCutterを閉じました");
+        $this->getLogger()->info("§a".self::PLUGIN_NAME."を閉じました");
     }
 }

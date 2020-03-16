@@ -24,12 +24,12 @@ class tcCommand extends Command{
     public function execute(CommandSender $sender, string $label, array $args){
         if ($sender instanceof Player) {
             $tag = $sender->namedtag;
-            if (main::isOn($sender)===false) {
-				$tag->setInt("TreeCutter", 1);
-				$sender->sendMessage("[TreeCutter]§aONにしました。");
-            } else {
-				$tag->setInt("TreeCutter", 0);
+            if (main::isOn($sender)) {
+				$tag->setInt(main::PLUGIN_NAME, 0);
 				$sender->sendMessage("[TreeCutter]§aOFFにいたしました。");
+            } else {
+				$tag->setInt(main::PLUGIN_NAME, 1);
+				$sender->sendMessage("[TreeCutter]§aONにしました。");
             }
         }
         return true;
